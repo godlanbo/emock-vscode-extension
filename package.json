@@ -1,0 +1,152 @@
+{
+  "name": "study-demo",
+  "displayName": "vscode-study-plugin",
+  "description": "to study vscode plugin",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.59.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:study-demo.helloWorld",
+    "onCommand:study-demo.getCurrentFilePath",
+    "onLanguage:json",
+    "onLanguage:javascript",
+    "onCommand:study-demo.openWebview"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "eMock",
+          "title": "E-Mock",
+          "icon": "img/eMock.svg"
+        }
+      ]
+    },
+    "views": {
+      "eMock": [
+        {
+          "id": "eMock.view.welcome",
+          "name": "Welcome",
+          "icon": "img/eMock.svg",
+          "contextualTitle": "E-Mock"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "eMock.view.welcome",
+        "contents": "In order to use git features, you can open a folder containing a git repository or clone from a URL.\n[Open Folder](command:vscode.openFolder)\n[Clone Repository](command:study-demo.openWebview)\nTo learn more about how to use git and source control in VS Code [read our docs](https://aka.ms/vscode-scm)."
+      }
+    ],
+    "configuration": {
+      "title": "plugin-config",
+      "properties": {
+        "vscodePluginDemo.yourname": {
+          "type": "string",
+          "default": "godlanbo",
+          "description": "你的名字"
+        },
+				"EMock.port": {
+					"type": "number",
+					"default": "3000",
+					"description": "启动服务的端口"
+				}
+      }
+    },
+    "commands": [
+      {
+        "command": "study-demo.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "study-demo.getCurrentFilePath",
+        "title": "获取路径"
+      },
+      {
+        "command": "study-demo.openWebview",
+        "title": "打开webview"
+      },
+			{
+				"command": "study-demo.openMockServer",
+				"title": "开启mock-server"
+			},
+			{
+				"command": "study-demo.closeMockServer",
+				"title": "关闭mock-server"
+			}
+    ],
+    "keybindings": [
+      {
+        "command": "study-demo.helloWorld",
+        "key": "ctrl+f10",
+        "mac": "cmd+f10",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorFocus",
+          "command": "study-demo.getCurrentFilePath",
+          "group": "navigation@2"
+        },
+        {
+          "when": "editorFocus",
+          "command": "study-demo.openWebview",
+          "group": "navigation@1"
+        },
+				{
+					"command": "study-demo.openMockServer",
+					"when": "!EMock:show",
+					"group": "2_workspace"
+				},
+				{
+					"command": "study-demo.closeMockServer",
+					"when": "EMock:show",
+					"group": "2_workspace"
+				}
+      ],
+      "explorer/context": [
+        {
+          "command": "study-demo.getCurrentFilePath",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "study-demo.getCurrentFilePath",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.59.0",
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
+    "typescript": "^4.3.2",
+    "vscode-test": "^1.5.2"
+  },
+  "dependencies": {
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-json": "^2.0.2",
+    "koa-router": "^10.1.1",
+    "koa2-cors": "^2.0.6",
+    "mockjs": "^1.1.0"
+  }
+}
